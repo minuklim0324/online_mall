@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.5'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.mall'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17' // 아까 설치하신 JDK 버전에 맞춰 17 또는 21로 쓰셔도 됩니다.
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // AOP 및 JSON 처리
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'com.h2database:h2' // 우선 테스트용 DB
+    // Spring Cloud OpenFeign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.kafka:spring-kafka'
+
+// 1. MyBatis Spring Boot Starter (Mapper 인식용)
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+    // 2. JDBC 및 Database Driver (현재 컨테이너가 MySQL이면 mysql, PostgreSQL이면 postgresql 선택)
+    // MySQL 사용 시:
+    implementation 'com.mysql:mysql-connector-j'
+    // PostgreSQL 사용 시:
+    // implementation 'org.postgresql:postgresql'
+}
+// Spring Cloud 버전을 맞춰주기 위한 설정 (필요 시)
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2022.0.3" // 스프링부트 버전에 맞춰 조절
+    }
+}
+tasks.named('test') {
+    useJUnitPlatform()
+}

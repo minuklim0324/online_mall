@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.payment.repository.PaymentMapper">
+
+    <insert id="insertPayment">
+        INSERT INTO payments (order_id, amount, status) 
+        VALUES (#{orderId}, #{amount}, #{status})
+    </insert>
+
+    <update id="updateStatus">
+        UPDATE payments 
+        SET status = #{status}
+        WHERE order_id = #{orderId}
+    </update>
+
+    <select id="findStatusByOrderId" resultType="string">
+        SELECT status 
+        FROM payments 
+        WHERE order_id = #{orderId}
+        LIMIT 1
+    </select>
+
+</mapper>
