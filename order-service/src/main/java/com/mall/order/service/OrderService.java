@@ -48,6 +48,7 @@ public class OrderService {
         if (currentSid != null) {
             headers.set("X-Scenario-Id", currentSid);
         }
+        headers.set("X-Source-Service", "order-service");
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
         // restTemplate.getForObject 대신 exchange를 사용하여 헤더 포함 호출

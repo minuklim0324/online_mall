@@ -32,7 +32,7 @@ public class PaymentConsumer {
      * 주문 서비스(Order Service)로부터 결제 요청 메시지를 수신합니다.
      * @param message JSON 형태의 결제 요청 문자열
      */
-    @KafkaListener(topics = TOPIC_PAYMENT_REQ, groupId = "pay-group")
+    //@KafkaListener(topics = TOPIC_PAYMENT_REQ, groupId = "pay-group")
     public void consume(String message) {
         log.info("[Kafka] 결제 요청 수신: {}", message);
 
@@ -56,7 +56,8 @@ public class PaymentConsumer {
             // 현재 Kafka 설정(StringSerializer)에 맞춰 객체를 JSON 문자열로 직렬화하여 전송합니다.
             // 이 과정이 누락되면 SerializationException이 발생할 수 있습니다.
             String jsonResult = objectMapper.writeValueAsString(resultEntry);
-            kafkaTemplate.send(TOPIC_PAYMENT_RES, jsonResult);
+            // service.PaymentService.java 의 handlePaymentRequest 메소드 안에서 kafka 전송을 수행하고 있음
+            //kafkaTemplate.send(TOPIC_PAYMENT_RES, jsonResult);
 
             log.info("[Kafka] 결제 결과 전송 완료: {}", jsonResult);
 
